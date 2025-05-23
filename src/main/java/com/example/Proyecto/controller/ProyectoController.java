@@ -54,7 +54,7 @@ public class ProyectoController {
         if (usuarioActualizado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(usuarioActualizado); hola
+        return ResponseEntity.ok(usuarioActualizado); 
     }
     
 }
