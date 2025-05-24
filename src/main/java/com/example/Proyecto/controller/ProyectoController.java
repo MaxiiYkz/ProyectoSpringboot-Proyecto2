@@ -1,6 +1,8 @@
 package com.example.Proyecto.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,4 +59,15 @@ public class ProyectoController {
         return ResponseEntity.ok(usuarioActualizado); 
     }
     
+    @GetMapping("/total")
+    public ResponseEntity<String> obtenerTotalUsuarios() {
+        String mensaje = usuarioService.obtenerMensajeCantidadUsuarios();
+        return ResponseEntity.ok(mensaje);
+    }
+
+    @GetMapping("/estadisticas")
+    public Map<String, Object> estadisticasUsuarios() {
+        return usuarioService.obtenerEstadisticas();
+}
+
 }

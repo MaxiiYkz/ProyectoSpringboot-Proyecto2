@@ -1,6 +1,8 @@
 package com.example.Proyecto.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,4 +48,22 @@ public class UsuarioService {
 
         return repositorioUsuario.save(usuario);    
     }
+  
+    public long contarUsuarios() {
+        return repositorioUsuario.count();
+    }
+
+    public String obtenerMensajeCantidadUsuarios() {
+    long total = contarUsuarios();
+    return "Hay en total " + total + " usuarios.";
+    } 
+
+    public Map<String, Object> obtenerEstadisticas() {
+        Map<String, Object> estadisticas = new HashMap<>();
+        estadisticas.put("Total de Usuarios", repositorioUsuario.count());
+        estadisticas.put("Usuarios Activos", repositorioUsuario.countByEstado(true));
+        estadisticas.put("Usuarios Inactivos", repositorioUsuario.countByEstado(false));
+        return estadisticas;
+    }
+
 }

@@ -37,6 +37,7 @@ public class Usuario {
 
     private boolean activo;
 
+    //Verificar estado de la cuenta
     public boolean isActivo() {
         return activo;
     }
@@ -44,5 +45,16 @@ public class Usuario {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    private boolean estado;
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
 
 }
