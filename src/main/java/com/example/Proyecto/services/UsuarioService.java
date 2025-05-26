@@ -35,13 +35,6 @@ public class UsuarioService {
         return repositorioUsuario.save(usuario);
     }
 
-    /*public String eliminarUsuario(int idUsuario) {
-        repositorioUsuario.deleteById(idUsuario);
-        return "Usuario eliminado";
-    }*/
-
-    // Eliminado: cambiarEstado()
-
     public long contarUsuarios() {
         return repositorioUsuario.count();
     }
