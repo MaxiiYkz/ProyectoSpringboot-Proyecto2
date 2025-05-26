@@ -60,5 +60,5 @@ public class ProyectoController {
     public Map<String, Object> estadisticasUsuarios() {
         return usuarioService.obtenerEstadisticas();
     }
-
+ //
 }
