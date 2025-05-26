@@ -1,4 +1,4 @@
-Crear base de datos en Laragon llamada: db_usuario
+Antes de correr el programa, crear base de datos en Laragon llamada: db_usuario
 Ingresar un JSON en Postman para agregar el usuario: {
                                                       "run": "12345678-9",
                                                       "usuario": "ejemploUser",
