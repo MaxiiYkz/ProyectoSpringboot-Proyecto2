@@ -3,7 +3,9 @@ package com.example.Proyecto.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class UsuarioService {
         return repositorioUsuario.findById(idUsuario).orElse(null);
     }
 
+    //Actualizar Usuarios
     public Usuario actualizarUsuario(Usuario usu, Integer idUsuario) {
         Usuario aux = getUsuarioId(idUsuario);
         if (aux != null) {
@@ -49,26 +52,30 @@ public class UsuarioService {
         return repositorioUsuario.count();
     }
 
-    public String obtenerMensajeCantidadUsuarios() {
-        long total = contarUsuarios();
-        return "Hay en total " + total + " usuarios.";
+    public long obtenerCantidadUsuarios() {
+    return repositorioUsuario.count();
     }
 
+    //Estadisticas
     public Map<String, Object> obtenerEstadisticas() {
-        Map<String, Object> estadisticas = new HashMap<>();
-        estadisticas.put("Total de Usuarios", repositorioUsuario.count());
-        estadisticas.put("Usuarios Activos", repositorioUsuario.findByActivoTrue().size());
-        estadisticas.put("Usuarios Inactivos", repositorioUsuario.findByActivoFalse().size());
-        return estadisticas;
+    long total = repositorioUsuario.count();
+
+    if (total == 0) {
+        return Collections.emptyMap();
     }
 
-    //eliminar logicamente
+    Map<String, Object> estadisticas = new HashMap<>();
+    estadisticas.put("totalUsuarios", total);
+    return estadisticas;
+    }
+
+    //Eliminar logicamente
     public String eliminarUsuario(int idUsuario) {
     Optional<Usuario> optionalUsuario = repositorioUsuario.findById(idUsuario);
         if (optionalUsuario.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             usuario.setEliminado(true);
-            usuario.setActivo(false);  // <- Aquí marcamos que ya no está activo
+            usuario.setActivo(false);  //Aquí marcamos que ya no está activo
             repositorioUsuario.save(usuario);
             return "Usuario eliminado lógicamente y marcado como inactivo";
         } 
@@ -76,4 +83,18 @@ public class UsuarioService {
             return "Usuario no encontrado";
         }
     }
+
+    //Eliminar totalmente, si el usuario lo desea
+    public void eliminarUsuarioTotalmente(int idUsuario) {
+    if (!repositorioUsuario.existsById(idUsuario)) {
+        throw new NoSuchElementException("Usuario con ID " + idUsuario + " no encontrado");
+    }
+    repositorioUsuario.deleteById(idUsuario);
+    }
+
+    public boolean existeUsuario(int idUsuario) {
+    return repositorioUsuario.existsById(idUsuario);
+    }
+
+
 }
